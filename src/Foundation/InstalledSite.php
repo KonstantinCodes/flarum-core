@@ -200,7 +200,9 @@ class InstalledSite implements SiteInterface
         //$handler = new RotatingFileHandler($logPath, Logger::INFO);
         //$handler->setFormatter(new LineFormatter(null, null, true, true));
         $handler = new ErrorLogHandler();
-        $handler->setFormatter(new JsonFormatter());
+        $formatter = new JsonFormatter();
+        $formatter->includeStacktraces(true);
+        $handler->setFormatter($formatter);
 
         $app->instance('log', new Logger($app->environment(), [$handler]));
         $app->alias('log', LoggerInterface::class);
