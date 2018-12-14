@@ -42,6 +42,7 @@ use Illuminate\Hashing\HashServiceProvider;
 use Illuminate\Mail\MailServiceProvider;
 use Illuminate\Validation\ValidationServiceProvider;
 use Illuminate\View\ViewServiceProvider;
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\RotatingFileHandler;
@@ -199,6 +200,7 @@ class InstalledSite implements SiteInterface
         //$handler = new RotatingFileHandler($logPath, Logger::INFO);
         //$handler->setFormatter(new LineFormatter(null, null, true, true));
         $handler = new ErrorLogHandler();
+        $handler->setFormatter(new JsonFormatter());
 
         $app->instance('log', new Logger($app->environment(), [$handler]));
         $app->alias('log', LoggerInterface::class);
